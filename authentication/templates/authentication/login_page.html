@@ -5,13 +5,15 @@
 
 
 {% block content %}
-<h1 class="title">Connectez-vous</h1>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form | crispy }}
-    <br>
-    <input type="submit" value="Se connecter" class="button is-primary">
-</form>
+<div class="has-text-centered">
+    <h1 class="title">Connectez-vous</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <br>
+        <input type="submit" value="Se connecter" class="button is-primary">
+    </form>
 
+</div>
 
 {% endblock content %}

@@ -1,4 +1,4 @@
-{% load static bulma_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +7,8 @@
   <link rel="icon" href="https://user.oc-static.com/upload/2020/09/18/16004297044411_P7.png" />
   <title>{% block title %}LITReview{% endblock %}</title>
   {% block css %}
-    {% font_awesome %}
-    <link rel="stylesheet" href="{% static 'bulma/css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
   {% endblock css %}
 </head>
 

@@ -1,5 +1,4 @@
 asgiref==3.5.0
 Django==4.0.2
-django-bulma==0.8.3
-django-crispy-forms==1.7.2
+django-crispy-forms==1.14.0
 sqlparse==0.4.2
