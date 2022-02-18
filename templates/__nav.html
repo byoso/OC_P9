@@ -1,0 +1,27 @@
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+
+    <a class="navbar-item" href="{% url 'home' %}" class="title">
+        LITReview
+    </a>
+
+    <div class="navbar-end">
+        <div class="navbar-item">
+        {% if not user.is_authenticated %}
+        <div class="buttons">
+            <a class="button is-primary" href="{% url 'signup_page' %}">
+            <strong>S'inscrire</strong>
+            </a>
+            <a class="button is-light" href="{% url 'login_page' %}">
+            Connexion
+            </a>
+        </div>
+        {% else %}
+        <a class="button is-light" href="{% url 'logout_page' %}">
+        Se deconnecter
+        </a>
+
+        {% endif %}
+        </div>
+    </div>
+</nav>

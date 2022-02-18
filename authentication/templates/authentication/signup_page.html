@@ -1,0 +1,21 @@
+
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1 class="title">Inscrivez-vous</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <br>
+        <a href="{% url 'home' %}" class="button">Retourner</a>
+        <input type="submit" value="S'inscrire" class="button is-primary">
+
+
+    </form>
+
+
+
+
+{% endblock content %}

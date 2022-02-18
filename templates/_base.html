@@ -1,15 +1,43 @@
-{% extends 'bulma/base.html' %}
+{% load static bulma_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://user.oc-static.com/upload/2020/09/18/16004297044411_P7.png" />
+  <title>{% block title %}LITReview{% endblock %}</title>
+  {% block css %}
+    {% font_awesome %}
+    <link rel="stylesheet" href="{% static 'bulma/css/style.min.css' %}">
+  {% endblock css %}
+</head>
+
+<body>
+    <div class="container">
+
+        {% include '__nav.html' %}
+
+        {% block messages %}
+        {% endblock messages %}
+
+        {% block content %}
+
+        {% endblock content %}
+
+    </div>
 
 
-{% block title %}LITReview{% endblock %}
-
-{% block messages %}
-{% endblock messages %}
+</body>
 
 
+<footer>
+    {% block footer %}
 
-{% block content %}
+    {% endblock footer %}
+</footer>
 
 
-
-{% endblock content %}
+<script>
+    {% block script %}
+    {% endblock script %}
+</script>

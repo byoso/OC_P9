@@ -1,10 +1,17 @@
-{% extends '_base_bulma.html' %}
-
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %} login {% endblock title %}
 
 
 {% block content %}
-<h1 class="title">Login</h1>
+<h1 class="title">Connectez-vous</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <br>
+    <input type="submit" value="Se connecter" class="button is-primary">
+</form>
+
 
 {% endblock content %}
