@@ -2,14 +2,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="https://user.oc-static.com/upload/2020/09/18/16004297044411_P7.png" />
-  <title>{% block title %}LITReview{% endblock %}</title>
-  {% block css %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://user.oc-static.com/upload/2020/09/18/16004297044411_P7.png" />
+    <title>{% block title %}LITReview{% endblock %}</title>
+    {% block css %}
+    <!-- bulma -->
     <link rel="stylesheet" href="{% static '/css/bulma.min.css' %}">
+    <!-- css custom -->
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
-  {% endblock css %}
+    {% endblock css %}
+    <!-- material design icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 </head>
 
 <body>
@@ -32,7 +37,6 @@
 
 <footer>
     {% block footer %}
-
     {% endblock footer %}
 </footer>
 

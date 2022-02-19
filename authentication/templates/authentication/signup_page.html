@@ -1,20 +1,57 @@
-
 {% extends '_base.html' %}
-{% load crispy_forms_tags %}
+
+{%block title%}Sign up{%endblock title%}
 
 {% block content %}
-<div class="has-text-centered">
-    <h1 class="title">Inscrivez-vous</h1>
+<div class="columns is-centered">
+    <div class="column is-half">
+        <h1 class="title">Inscrivez-vous</h1>
 
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <br>
-        <a href="{% url 'home' %}" class="button">Retourner</a>
-        <input type="submit" value="S'inscrire" class="button is-primary">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="field">
+                <label class="label">{{ form.username.label }}</label>
+                <div class="control has-icons-left">
+                    {{ form.username }}
+                    <span class="icon is-small is-left">
+                        <span class="material-icons">account_circle</span>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="field">
+                <label class="label">{{ form.password1.label }}</label>
+                <div class="control has-icons-left">
+                    {{ form.password1 }}
+                    <span class="icon is-small is-left">
+                        <span class="material-icons">lock</span>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="field">
+                <label class="label">{{ form.password2.label }}</label>
+                <div class="control has-icons-left">
+                    {{ form.password2 }}
+                    <span class="icon is-small is-left">
+                        <span class="material-icons">lock</span>
+                    </span>
+                </div>
+
+            </div>
 
 
-    </form>
+            <br>
+            <a href="{% url 'home' %}" class="button">Retourner</a>
+            <input type="submit" value="S'inscrire" class="button is-primary">
+
+
+        </form>
+
+    </div>
 
 </div>
 

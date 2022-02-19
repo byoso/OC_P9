@@ -1,18 +1,42 @@
 {% extends '_base.html' %}
-{% load crispy_forms_tags %}
 
 {% block title %} login {% endblock title %}
 
-
 {% block content %}
-<div class="has-text-centered">
-    <h1 class="title">Connectez-vous</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <br>
-        <input type="submit" value="Se connecter" class="button is-primary">
-    </form>
+
+<div class="columns is-centered">
+    <div class="column is-half">
+        <h1 class="title">Connectez-vous</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="field">
+                <label class="label">{{ form.username.label }}</label>
+                <div class="control has-icons-left">
+                {{ form.username }}
+                <span class="icon is-small is-left">
+                    <span class="material-icons">account_circle</span>
+                  </span>
+                </div>
+
+            </div>
+
+            <div class="field">
+                <label class="label">{{ form.password.label }}</label>
+                <div class="control has-icons-left">
+                {{ form.password }}
+                <span class="icon is-small is-left">
+                    <span class="material-icons">lock</span>
+                  </span>
+                </div>
+
+            </div>
+
+            <br>
+            <input type="submit" value="Se connecter" class="button is-primary">
+        </form>
+
+    </div>
 
 </div>
 
