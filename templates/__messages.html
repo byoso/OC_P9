@@ -1,0 +1,12 @@
+{% if messages %}
+
+    {% for message in messages %}
+    <article id="{{message}}" class="message {{message.extra_tags}}">
+        <div class="message-body">
+            <button class="delete is-pulled-right" aria-label="delete" onclick="closeIt(this)"></button>
+            <p>{{ message }}</p>
+        </div>
+    </article>
+    {% endfor %}
+
+{% endif %}

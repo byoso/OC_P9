@@ -13,6 +13,7 @@
     {% endblock css %}
     <!-- material design icons-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script type="text/javascript" src="{% static '/js/main.js' %}"></script>
 
 </head>
 
@@ -21,8 +22,7 @@
 
         {% include '__nav.html' %}
 
-        {% block messages %}
-        {% endblock messages %}
+        {% include '__messages.html' %}
 
         {% block content %}
 

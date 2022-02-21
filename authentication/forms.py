@@ -5,9 +5,11 @@ from django.contrib.auth.forms import UserCreationForm
 
 class SignUpForm(UserCreationForm):
     password1 = forms.CharField(
-        max_length=150, widget=forms.PasswordInput(attrs={'class': 'input'}))
+        max_length=150, required=True,
+        widget=forms.PasswordInput(attrs={'class': 'input'}))
     password2 = forms.CharField(
-        max_length=150, widget=forms.PasswordInput(attrs={'class': 'input'}))
+        max_length=150, required=True,
+        widget=forms.PasswordInput(attrs={'class': 'input'}))
 
     class Meta:
         model = get_user_model()
@@ -21,9 +23,11 @@ class SignUpForm(UserCreationForm):
 class LoginForm(forms.Form):
     username = forms.CharField(
         max_length=150, label="Nom d'utilisateur",
+        required=True,
         widget=forms.TextInput(
             attrs={"class": "input"}))
     password = forms.CharField(
         max_length=150, label="Mot de passe",
+        required=True,
         widget=forms.PasswordInput(
             attrs={"class": "input"}))
