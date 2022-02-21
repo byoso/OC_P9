@@ -8,18 +8,36 @@
     <div class="navbar-end">
         <div class="navbar-item">
         {% if not user.is_authenticated %}
-        <div class="buttons">
-            <a class="button is-primary" href="{% url 'signup_page' %}">
-            <strong>S'inscrire</strong>
-            </a>
-            <a class="button is-light" href="{% url 'login_page' %}">
-            Connexion
-            </a>
-        </div>
+            <div class="buttons">
+                <a class="button is-primary" href="{% url 'signup_page' %}">
+                <strong>S'inscrire</strong>
+                </a>
+                <a class="button is-light" href="{% url 'login_page' %}">
+                Connexion
+                </a>
+            </div>
         {% else %}
-        <a class="button is-light" href="{% url 'logout_page' %}">
-        Se déconnecter
-        </a>
+            <div class="field has-addons">
+                <p class="control m-2">
+                    <span>{{user}}</span>
+                </p>
+                <p class="control">
+                    <a class="button is-light" href="{% url 'flux' %}">
+                        <strong>Flux</strong></a>
+                </p>
+                <p class="control">
+                    <a class="button is-light" href="">
+                        <strong>Posts</strong></a>
+                </p>
+                <p class="control">
+                    <a class="button is-light" href="">
+                        <strong>Abonnements</strong></a>
+                </p>
+                <div style="width: 10px;"></div>
+                <a class="button is-light" href="{% url 'logout_page' %}">
+                    Se déconnecter
+                </a>
+            </div>
 
         {% endif %}
         </div>

@@ -19,7 +19,7 @@ def login_page(request):
                     extra_tags=const.SUCCESS
                     )
                 login(request, user)
-                return redirect('home')
+                return redirect('flux')
             else:
                 messages.add_message(
                     request, messages.ERROR, (
@@ -47,7 +47,7 @@ def signup_page(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('flux')
         else:
             if form.errors:
                 for field in form:
