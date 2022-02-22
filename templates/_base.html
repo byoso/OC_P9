@@ -7,12 +7,12 @@
     <!-- favicon -->
     <link rel="icon" href="https://user.oc-static.com/upload/2020/09/18/16004297044411_P7.png" />
     <title>{% block title %}LITReview{% endblock %}</title>
-    {% block css %}
-    <!-- css with bulma cdn -->
-    <link rel="stylesheet" href="{% static '/css/style.css' %}">
-    {% endblock css %}
     <!-- material design icons-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- css with bulma cdn -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    {% block css %}
+    {% endblock css %}
     <script type="text/javascript" src="{% static '/js/main.js' %}"></script>
 
 </head>

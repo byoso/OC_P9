@@ -1,0 +1,50 @@
+{% extends '_base.html' %}
+
+{% block content %}
+
+<section class="columns is-centered">
+    <div class="column is-half">
+        <h1 class="title">Creer une critique</h1>
+
+        <div class="box p-5">
+            <h2 class="subtitle">Vous êtes en train de poster en reponse à</h2>
+            <div class="box m-5">
+                <p>{{ticket.user}} a demandé une critique <span class="is-pulled-right">{{ ticket.time_created }}</span></p>
+                <br>
+                <p>{{ticket.title}}</p>
+                <p>{{ticket.description}}</p>
+                {% if ticket.image %}
+                    <img src="{{ ticket.image.url }}" alt="cover" class="cover m-5">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="box p-5">
+            <h2 class="subtitle">Critique</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+
+                {{ form.headline.label }}
+                {{ form.headline }}
+                {{ form.rating.label }}<br>
+                <div class="columns">
+                    {% for choice in form.rating %}
+                        <div class="column">
+                            <span>{{choice.label}} {{choice}}</span>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+                <br>
+                {{ form.body.label }}
+                {{ form.body }}
+
+                <button class="button is-pulled-right mt-5">Envoyer</button>
+            <div style="height: 50px"></div>
+            </form>
+        </div>
+</div>
+</section>
+
+{% endblock content %}
