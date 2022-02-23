@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from . import forms
-from . import const
+from project_LITReview import const
 
 
 def login_page(request):

@@ -1,5 +1,5 @@
 // closes the messages
-function closeIt(elem){
+function closeMessage(elem){
     console.log('close')
     elem.parentNode.parentNode.remove()
 };

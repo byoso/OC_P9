@@ -1,23 +1,25 @@
 from itertools import chain
+from webbrowser import get
 
-from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from .models import (
     Ticket,
     Review,
+    UserFollows,
 )
 from .forms import (
     TicketCreateForm,
     ReviewCreateForm,
+    SearchForm,
 )
+from project_LITReview import const
 
 
 def home(request):
-    context = {
-
-    }
-    return render(request, 'blog/home.html', context)
+    return render(request, 'blog/home.html')
 
 
 @login_required
@@ -35,6 +37,7 @@ def flux(request):
     return render(request, "blog/flux.html", context)
 
 
+@login_required
 def ticket_create(request):
     if request.method == "POST":
         form = TicketCreateForm(request.POST, request.FILES)
@@ -71,3 +74,64 @@ def review_create(request, ticket_id):
         "form": form,
     }
     return render(request, "blog/review_create.html", context)
+
+
+@login_required
+def subscriptions(request):
+    followings = UserFollows.objects.filter(user=request.user)
+    followers = UserFollows.objects.filter(followed_user=request.user)
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['entry']
+            try:
+                user_to_follow = get_user_model().objects.get(username=name)
+            except get_user_model().DoesNotExist:
+                messages.add_message(
+                    request, messages.ERROR, (
+                        f"Il n'existe pas d'utilisateur \"{name}\""
+                        ),
+                    extra_tags=const.ERROR
+                )
+                return redirect('subscriptions')
+            else:
+                new_follow = UserFollows(
+                    user=request.user, followed_user=user_to_follow)
+                new_follow.save()
+                messages.add_message(
+                    request, messages.SUCCESS, (
+                        f"Vous êtes abonné à \"{name}\""
+                        ),
+                    extra_tags=const.SUCCESS
+                )
+                return redirect('subscriptions')
+
+    form = SearchForm()
+    context = {
+        'followings': followings,
+        'followers': followers,
+        'form': form,
+    }
+    return render(request, 'blog/subscriptions.html', context)
+
+
+@login_required
+def unfollow(request, id):
+    unfollow = get_object_or_404(get_user_model(), id=id)
+    if request.method == "POST":
+        unfollowing = get_object_or_404(
+            UserFollows, user=request.user, followed_user=unfollow)
+        print(unfollowing)
+        unfollowing.delete()
+        messages.add_message(
+            request, messages.SUCCESS, (
+                f"Vous vous êtes désabonné à \"{unfollow.username}\""
+                ),
+            extra_tags=const.SUCCESS
+        )
+        return redirect('subscriptions')
+
+    context = {
+        "unfollow": unfollow,
+    }
+    return render(request, 'blog/unfollow.html', context)
