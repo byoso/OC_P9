@@ -1,0 +1,22 @@
+<article class="box m-5">
+    <p>
+    {% if review.user == user %}
+    Vous avez
+    {% else %}
+    {{review.user}} a
+    {% endif %} publié une critique <span class="is-pulled-right">{{ review.time_created }}</span></p>
+    <br>
+    <p>{{review.headline}} - <span class="rating" id="rating_id_{{review.id}}" rating="{{ review.rating }}"></span></p>
+    <p>{{review.body}}</p>
+
+    {% include 'blog/__ticket.html' with ticket=review.ticket %}
+
+    <div class="do-up">
+        <a href="#">
+            <span class="material-icons is-pulled-left">
+                arrow_upward
+            </span>
+        </a>
+    </div>
+    <div style="height:10px"></div>
+</article>

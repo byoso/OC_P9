@@ -1,7 +1,11 @@
+from itertools import chain
+
+from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import (
     Ticket,
+    Review,
 )
 from .forms import (
     TicketCreateForm,
@@ -18,9 +22,15 @@ def home(request):
 
 @login_required
 def flux(request):
-    tickets = Ticket.objects.all()
+    reviews = request.user.get_reviews()
+    tickets = request.user.get_tickets()
+    reviewes_for_tickets = Review.objects.filter(ticket__user=request.user)
+
+    posts = sorted(
+        chain(reviews, tickets, reviewes_for_tickets),
+        key=lambda post: post.time_created, reverse=True)
     context = {
-        "tickets": tickets,
+        "posts": posts,
     }
     return render(request, "blog/flux.html", context)
 
@@ -51,6 +61,8 @@ def review_create(request, ticket_id):
             review.ticket = ticket
             review.user = request.user
             review.save()
+            ticket.reviewed = True
+            ticket.save()
             return redirect('flux')
 
     form = ReviewCreateForm()

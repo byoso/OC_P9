@@ -1,6 +1,8 @@
 {% extends '_base.html' %}
-{% block content %}
 
+{% load static %}
+
+{% block content %}
 
 <div class="columns is-centered">
     <div class="column is-half">
@@ -17,33 +19,21 @@
 
 <section class="columns is-centered">
     <div class="column">
-    {% for ticket in tickets %}
-        <div class="box m-5">
-            <p>{{ticket.user}} a demandé une critique <span class="is-pulled-right">{{ ticket.time_created }}</span></p>
-            <br>
-            <p>{{ticket.title}}</p>
-            <p>{{ticket.description}}</p>
-            {% if ticket.image %}
-                <img src="{{ ticket.image.url }}" alt="cover" class="cover m-5">
-            {% endif %}
+    {% for post in posts %}
 
-            <div class="do-up">
-                <a href="#">
-                    <span class="material-icons is-pulled-left">
-                        arrow_upward
-                    </span>
-                </a>
-            </div>
-            <div>
-                <a href="{% url 'review_create'  ticket.id  %}" class="button is-pulled-right">Créer une critique</a>
-
-            </div>
-            <div style="height:30px"></div>
-        </div>
+        {% if post.type == "ticket" %}
+            {% include 'blog/__ticket.html' with ticket=post user=user %}
+        {% else %}
+            {% include 'blog/__review.html' with review=post user=user %}
+        {% endif %}
     {% endfor %}
     </div>
 
 </section>
 
-
 {% endblock content %}
+
+
+{% block script %}
+<script type="text/javascript" src="{% static 'blog/js/stars.js' %}"></script>
+{% endblock script %}
