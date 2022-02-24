@@ -1,4 +1,4 @@
-<article class="box m-5">
+
     <p>
     {% if review.user == user %}
     Vous avez
@@ -9,14 +9,14 @@
     <p>{{review.headline}} - <span class="rating" id="rating_id_{{review.id}}" rating="{{ review.rating }}"></span></p>
     <p>{{review.body}}</p>
 
-    {% include 'blog/__ticket.html' with ticket=review.ticket %}
+    <article class="box m-5">
+        {% include 'blog/__ticket.html' with ticket=review.ticket buttons='no_buttons' %}
+    </article>
 
-    <div class="do-up">
-        <a href="#">
-            <span class="material-icons is-pulled-left">
-                arrow_upward
-            </span>
-        </a>
-    </div>
+    {% if buttons == 'review_buttons' %}
+    <a href="{% url 'post_delete' 'review' review.id %}" class="button is-danger is-pulled-right ml-5">Supprimer</a>
+    <a href="{% url 'post_update' 'review' review.id %}" class="button is-pulled-right">Modifier</a>
+    <div style="height:40px"></div>
+    {% else %}
     <div style="height:10px"></div>
-</article>
+    {% endif %}

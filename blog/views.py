@@ -1,6 +1,7 @@
 from itertools import chain
 from webbrowser import get
 
+from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -29,7 +30,11 @@ def flux(request):
     reviewes_for_tickets = Review.objects.filter(ticket__user=request.user)
 
     posts = sorted(
-        chain(reviews, tickets, reviewes_for_tickets),
+        chain(
+            reviews,
+            tickets,
+            reviewes_for_tickets,
+            ),
         key=lambda post: post.time_created, reverse=True)
     context = {
         "posts": posts,
@@ -56,7 +61,8 @@ def ticket_create(request):
 @login_required
 def review_create(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
-
+    if ticket.reviewed:
+        raise Http404()
     if request.method == "POST":
         form = ReviewCreateForm(request.POST)
         if form.is_valid():
@@ -76,6 +82,7 @@ def review_create(request, ticket_id):
     return render(request, "blog/review_create.html", context)
 
 
+@login_required
 def review_publish(request):
     """Create à spontaneous review without ticket"""
     if request.method == "POST":
@@ -162,3 +169,79 @@ def unfollow(request, id):
         "unfollow": unfollow,
     }
     return render(request, 'blog/unfollow.html', context)
+
+
+@login_required
+def posts(request):
+    reviews = request.user.get_reviews()
+    tickets = request.user.get_tickets()
+    posts = sorted(
+        chain(
+            reviews,
+            tickets,
+            ),
+        key=lambda post: post.time_created, reverse=True)
+    context = {
+        'posts': posts,
+    }
+    return render(request, "blog/posts.html", context)
+
+
+@login_required
+def post_delete(request, type, id):
+    if type == 'review':
+        post = get_object_or_404(Review, id=id)
+        ticket = post.ticket
+        ticket.reviewed = False
+        ticket.save()
+    elif type == 'ticket':
+        post = get_object_or_404(Ticket, id=id)
+    else:
+        raise Http404()
+    if request.method == "POST":
+        post.delete()
+        return redirect('posts')
+    context = {
+        'post': post,
+        'type': type,
+    }
+    return render(request, 'blog/post_delete.html', context)
+
+
+@login_required
+def post_update(request, type, id):
+    if request.method == "POST":
+        if type == 'review':
+            post = get_object_or_404(Review, id=id)
+            form = ReviewCreateForm(request.POST, instance=post)
+            if form.is_valid():
+                form.save()
+        elif type == 'ticket':
+            post = get_object_or_404(Ticket, id=id)
+            form = TicketCreateForm(
+                request.POST, request.FILES, instance=post)
+            reviewed = post.reviewed
+            if form.is_valid():
+                ticket = form.save(commit=False)
+                ticket.reviewed = reviewed
+                ticket.save()
+        else:
+            raise Http404()
+        return redirect('posts')
+
+    if type == 'review':
+        post = get_object_or_404(Review, id=id)
+        form = ReviewCreateForm(instance=post)
+
+    elif type == 'ticket':
+        post = get_object_or_404(Ticket, id=id)
+        form = TicketCreateForm(instance=post)
+    else:
+        raise Http404()
+
+    context = {
+        'post': post,
+        'form': form,
+        'type': type,
+    }
+    return render(request, 'blog/post_update.html', context)

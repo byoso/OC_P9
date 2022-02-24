@@ -4,29 +4,17 @@
 
 {% block content %}
 
-<div class="columns is-centered">
-    <div class="column is-half">
-        <div class="columns" >
-            <div class="column is-half">
-                <a class="button is-fullwidth" href="{% url 'ticket_create' %}">Demander une critique</a>
-            </div>
-            <div class="column is-half">
-                <a class="button is-fullwidth" href="{% url 'review_publish' %}">Créer une critique</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 <section class="columns is-centered">
     <div class="column is-half">
+        <h1 class="subtitle">Vos posts</h1>
     {% for post in posts %}
     <article class="box m-5">
         {% if post.type == "ticket" %}
-            {% include 'blog/__ticket.html' with ticket=post user=user %}
+            {% include 'blog/__ticket.html' with ticket=post user=user buttons='ticket_buttons' %}
         {% elif post.type == "review" %}
-            {% include 'blog/__review.html' with review=post user=user %}
+            {% include 'blog/__review.html' with review=post user=user buttons='review_buttons' %}
         {% endif %}
-
     </article>
     <div class="do-up">
         <a href="#">
