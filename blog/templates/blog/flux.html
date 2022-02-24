@@ -11,7 +11,7 @@
                 <a class="button is-fullwidth" href="{% url 'ticket_create' %}">Demander une critique</a>
             </div>
             <div class="column is-half">
-                <a class="button is-fullwidth" href="">Créer une critique</a>
+                <a class="button is-fullwidth" href="{% url 'review_publish' %}">Créer une critique</a>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
 
         {% if post.type == "ticket" %}
             {% include 'blog/__ticket.html' with ticket=post user=user %}
-        {% else %}
+        {% elif post.type == "review" %}
             {% include 'blog/__review.html' with review=post user=user %}
         {% endif %}
     {% endfor %}

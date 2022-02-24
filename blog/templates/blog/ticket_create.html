@@ -5,67 +5,16 @@
 <section class="columns is-centered">
     <div class="column is-half">
         <h1 class="title">Creer un ticket</h1>
-
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div class="field">
-                <label class="label">{{ form.title.label }}</label>
-                <div class="control">
-                    {{ form.title }}
-                </div>
-
-            </div>
-
-            <div class="field">
-                <label class="label">{{ form.description.label }}</label>
-                <div class="control">
-                    {{ form.description }}
-                </div>
-            </div>
-
-            <label class="label">{{ form.image.label }}</label>
-            <div class="file">
-                <label class="file-label">
-                  <input id="id_image" class="file-input" type="file" name="image" accept="image/*">
-                  <span class="file-cta">
-                    <span class="file-icon">
-                        <span class="material-icons">
-                            file_upload
-                        </span>
-                    </span>
-                        <span class="file-label">
-                            Télécharger un fichier
-                        </span>
-                  </span>
-                  <span class="file-name is-fullwidth" id="selected_file" title="aucun fichier">
-                    aucun fichier selectionné
-                  </span>
-                </label>
-
-              </div>
+            {% include 'blog/__ticket_form.html' %}
 
             <br>
             <input type="submit" value="Envoyer" class="button is-primary is-pulled-right">
         </form>
-
     </div>
 
 </section>
 
 {% endblock content %}
-
-{% block script %}
-<script>
-
-const fileInput = document.getElementById('id_image');
-const selected_file_elem = document.getElementById('selected_file')
-fileInput.onchange = () => {
-const selectedFile = fileInput.files[0];
-selected_file_elem.innerHTML = selectedFile.name;
-selected_file_elem.setAttribute("title", selectedFile.name);
-
-}
-</script>
-
-{% endblock script %}

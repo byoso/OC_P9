@@ -76,6 +76,33 @@ def review_create(request, ticket_id):
     return render(request, "blog/review_create.html", context)
 
 
+def review_publish(request):
+    """Create à spontaneous review without ticket"""
+    if request.method == "POST":
+        ticket_form = TicketCreateForm(request.POST, request.FILES)
+        review_form = ReviewCreateForm(request.POST)
+        if ticket_form.is_valid() and review_form.is_valid():
+            ticket = ticket_form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+
+            review = review_form.save(commit=False)
+            review.ticket = ticket
+            review.user = request.user
+            review.save()
+            ticket.reviewed = True
+            ticket.save()
+            return redirect('flux')
+
+    ticket_form = TicketCreateForm()
+    review_form = ReviewCreateForm()
+    context = {
+        'ticket_form': ticket_form,
+        'review_form': review_form,
+    }
+    return render(request, "blog/review_publish.html", context)
+
+
 @login_required
 def subscriptions(request):
     followings = UserFollows.objects.filter(user=request.user)

@@ -18,32 +18,17 @@
                 {% endif %}
             </div>
         </div>
-
         <div class="box p-5">
             <h2 class="subtitle">Critique</h2>
             <form action="" method="post">
                 {% csrf_token %}
 
-                {{ form.headline.label }}
-                {{ form.headline }}
-                {{ form.rating.label }}<br>
-                <div class="columns">
-                    {% for choice in form.rating %}
-                        <div class="column">
-                            <span>{{choice.label}} {{choice}}</span>
-                        </div>
-                    {% endfor %}
-
-                </div>
-
-                <br>
-                {{ form.body.label }}
-                {{ form.body }}
+                {% include 'blog/__review_form.html' %}
 
                 <button class="button is-pulled-right mt-5">Envoyer</button>
-            <div style="height: 50px"></div>
+                <div style="height: 50px"></div>
             </form>
-        </div>
+</div>
 </div>
 </section>
 
