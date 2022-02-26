@@ -44,11 +44,11 @@ class UserFollows(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="following")
+        related_name="follower")
     followed_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="followed_by")
+        related_name="followed")
 
     class Meta:
         unique_together = ('user', 'followed_user')

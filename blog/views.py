@@ -1,11 +1,12 @@
 from itertools import chain
-from webbrowser import get
 
 from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from .models import (
     Ticket,
     Review,
@@ -25,15 +26,18 @@ def home(request):
 
 @login_required
 def flux(request):
-    reviews = request.user.get_reviews()
-    tickets = request.user.get_tickets()
-    reviewes_for_tickets = Review.objects.filter(ticket__user=request.user)
+    followed_users = get_user_model().objects.filter(
+        followed__user=request.user)
+    reviews = Review.objects.filter(
+        Q(user=request.user) | Q(ticket__user=request.user) |
+        Q(user__in=followed_users))
+    tickets = Ticket.objects.filter(
+        Q(user=request.user) | Q(user__in=followed_users))
 
     posts = sorted(
         chain(
             reviews,
             tickets,
-            reviewes_for_tickets,
             ),
         key=lambda post: post.time_created, reverse=True)
     context = {
@@ -60,6 +64,7 @@ def ticket_create(request):
 
 @login_required
 def review_create(request, ticket_id):
+    """Create a review from an existing ticket"""
     ticket = get_object_or_404(Ticket, id=ticket_id)
     if ticket.reviewed:
         raise Http404()
@@ -155,7 +160,6 @@ def unfollow(request, id):
     if request.method == "POST":
         unfollowing = get_object_or_404(
             UserFollows, user=request.user, followed_user=unfollow)
-        print(unfollowing)
         unfollowing.delete()
         messages.add_message(
             request, messages.SUCCESS, (
