@@ -8,22 +8,27 @@
 <section class="columns is-centered">
     <div class="column is-half">
         <h1 class="subtitle">Vos posts</h1>
-    {% for post in posts %}
-    <article class="box m-5">
-        {% if post.type == "ticket" %}
-            {% include 'blog/__ticket.html' with ticket=post user=user buttons='ticket_buttons' %}
-        {% elif post.type == "review" %}
-            {% include 'blog/__review.html' with review=post user=user buttons='review_buttons' %}
-        {% endif %}
-    </article>
-    <div class="do-up">
-        <a href="#">
-            <span class="material-icons is-pulled-left">
-                arrow_upward
-            </span>
-        </a>
-    </div>
-    {% endfor %}
+
+        <div class="columns m-5">
+            {% include '__pagination.html' with view_name='posts' objects=posts%}
+        </div>
+
+        {% for post in posts %}
+        <article class="box m-5">
+            {% if post.type == "ticket" %}
+                {% include 'blog/__ticket.html' with ticket=post user=user buttons='ticket_buttons' %}
+            {% elif post.type == "review" %}
+                {% include 'blog/__review.html' with review=post user=user buttons='review_buttons' %}
+            {% endif %}
+        </article>
+        <div class="do-up">
+            <a href="#">
+                <span class="material-icons is-pulled-left">
+                    arrow_upward
+                </span>
+            </a>
+        </div>
+        {% endfor %}
     </div>
 
 </section>

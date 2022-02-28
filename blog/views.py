@@ -1,12 +1,13 @@
 from itertools import chain
 
+from django.core.paginator import Paginator, EmptyPage
 from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
 from django.db.models import Q
+
 from .models import (
     Ticket,
     Review,
@@ -25,7 +26,7 @@ def home(request):
 
 
 @login_required
-def flux(request):
+def flux(request, page=1):
     followed_users = get_user_model().objects.filter(
         followed__user=request.user)
     reviews = Review.objects.filter(
@@ -34,12 +35,18 @@ def flux(request):
     tickets = Ticket.objects.filter(
         Q(user=request.user) | Q(user__in=followed_users))
 
-    posts = sorted(
+    posts_created = sorted(
         chain(
             reviews,
             tickets,
             ),
         key=lambda post: post.time_created, reverse=True)
+    paginator = Paginator(posts_created, 3)
+    try:
+        posts = paginator.page(page)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     context = {
         "posts": posts,
     }
@@ -89,7 +96,7 @@ def review_create(request, ticket_id):
 
 @login_required
 def review_publish(request):
-    """Create à spontaneous review without ticket"""
+    """Create a spontaneous review without ticket"""
     if request.method == "POST":
         ticket_form = TicketCreateForm(request.POST, request.FILES)
         review_form = ReviewCreateForm(request.POST)
@@ -176,15 +183,20 @@ def unfollow(request, id):
 
 
 @login_required
-def posts(request):
+def posts(request, page=1):
     reviews = request.user.get_reviews()
     tickets = request.user.get_tickets()
-    posts = sorted(
+    posts_created = sorted(
         chain(
             reviews,
             tickets,
             ),
         key=lambda post: post.time_created, reverse=True)
+    paginator = Paginator(posts_created, 3)
+    try:
+        posts = paginator.page(page)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     context = {
         'posts': posts,
     }
@@ -195,6 +207,7 @@ def posts(request):
 def post_delete(request, type, id):
     if type == 'review':
         post = get_object_or_404(Review, id=id)
+        request.user.is_user(post)
         ticket = post.ticket
         ticket.reviewed = False
         ticket.save()
@@ -204,11 +217,13 @@ def post_delete(request, type, id):
         raise Http404()
     if request.method == "POST":
         post.delete()
+        request.user.is_user(post)
         return redirect('posts')
     context = {
         'post': post,
         'type': type,
     }
+    request.user.is_user(post)
     return render(request, 'blog/post_delete.html', context)
 
 
@@ -217,11 +232,13 @@ def post_update(request, type, id):
     if request.method == "POST":
         if type == 'review':
             post = get_object_or_404(Review, id=id)
+            request.user.is_user(post)
             form = ReviewCreateForm(request.POST, instance=post)
             if form.is_valid():
                 form.save()
         elif type == 'ticket':
             post = get_object_or_404(Ticket, id=id)
+            request.user.is_user(post)
             form = TicketCreateForm(
                 request.POST, request.FILES, instance=post)
             reviewed = post.reviewed
@@ -248,4 +265,5 @@ def post_update(request, type, id):
         'form': form,
         'type': type,
     }
+    request.user.is_user(post)
     return render(request, 'blog/post_update.html', context)

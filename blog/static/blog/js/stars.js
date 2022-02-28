@@ -1,4 +1,4 @@
-
+// displays the stars
 function newStar(){
     var star = document.createElement('span');
     star.classList.add('material-icons');
@@ -12,7 +12,6 @@ function newEmptyStar(){
     star.textContent = 'star_outline';
     return star
 };
-
 
 function create_stars(elem, value){
     value = Number(value);
