@@ -19,8 +19,6 @@ class User(AbstractUser):
         """Verify if the user wrote a post (ticket or review),
         return True or raise PermissionDenied"""
         if post.user == self:
-            print("===action autorisée")
             return True
         else:
-            print("===action autorisée")
             raise PermissionDenied()

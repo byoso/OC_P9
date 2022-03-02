@@ -15,6 +15,7 @@ from .models import (
 )
 from .forms import (
     TicketCreateForm,
+    TicketNoImageCreateForm,
     ReviewCreateForm,
     SearchForm,
 )
@@ -56,7 +57,10 @@ def flux(request, page=1):
 @login_required
 def ticket_create(request):
     if request.method == "POST":
-        form = TicketCreateForm(request.POST, request.FILES)
+        if len(request.FILES) == 0:
+            form = TicketNoImageCreateForm(request.POST)
+        else:
+            form = TicketCreateForm(request.POST, request.FILES)
         if form.is_valid():
             ticket = form.save(commit=False)
             ticket.user = request.user

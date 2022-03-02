@@ -1,6 +1,10 @@
+
+from PIL import Image
+
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
+from project_LITReview import const
 
 
 class Ticket(models.Model):
@@ -9,12 +13,22 @@ class Ticket(models.Model):
     description = models.CharField(max_length=2048, blank=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
     reviewed = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-time_created',)
+
+    def resize_image(self):
+        if self.image :
+            image = Image.open(self.image)
+            image.thumbnail(const.IMAGE_MAX_SIZE)
+            image.save(self.image.path)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.resize_image()
 
     def __str__(self):
         return f"{self.title} by {self.user}"

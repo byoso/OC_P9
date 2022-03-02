@@ -5,7 +5,7 @@ from .models import (
 )
 
 
-class TicketCreateForm(forms.ModelForm):
+class TicketNoImageCreateForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(attrs={"class": "input"}),
         label="Titre")
@@ -14,6 +14,13 @@ class TicketCreateForm(forms.ModelForm):
             "class": "textarea",
             }),
         )
+
+    class Meta:
+        model = Ticket
+        exclude = ('user', 'image')
+
+
+class TicketCreateForm(TicketNoImageCreateForm):
     image = forms.ImageField(
         widget=forms.FileInput(attrs={
             "type": "file",
