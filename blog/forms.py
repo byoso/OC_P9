@@ -19,6 +19,11 @@ class TicketNoImageCreateForm(forms.ModelForm):
         model = Ticket
         exclude = ('user', 'image')
 
+    def __init__(self, *args, **kwargs):
+        super(TicketNoImageCreateForm, self).__init__(*args, **kwargs)
+        # set the value 'required' to false
+        self.fields['description'].required = False
+
 
 class TicketCreateForm(TicketNoImageCreateForm):
     image = forms.ImageField(

@@ -21,7 +21,7 @@ class Ticket(models.Model):
         ordering = ('-time_created',)
 
     def resize_image(self):
-        if self.image :
+        if self.image:
             image = Image.open(self.image)
             image.thumbnail(const.IMAGE_MAX_SIZE)
             image.save(self.image.path)
