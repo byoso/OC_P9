@@ -9,9 +9,11 @@ from django.contrib.auth.forms import UserCreationForm
 
 class SignUpForm(UserCreationForm):
     password1 = forms.CharField(
+        label="Mot de passe",
         max_length=150, required=True,
         widget=forms.PasswordInput(attrs={'class': 'input'}))
     password2 = forms.CharField(
+        label="Confirmez le mot de passe",
         max_length=150, required=True,
         widget=forms.PasswordInput(attrs={'class': 'input'}))
 

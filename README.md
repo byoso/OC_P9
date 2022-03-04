@@ -1,6 +1,7 @@
-# LitReview
+# LITReview
 
-Lit review est une application web permettant de demander des critiques de livres, ainsi que
+Lit review est une application web permettant de demander des critiques de livres, ainsi que de
+repondre à ces demandes en écrivant des critiques.
 
 ## Installation et lancement
 
@@ -51,11 +52,46 @@ Dans les données fournies (fichier db.sqlite3), vous trouverez trois comptes ut
 et un compte administrateur:
 - admin
 
-Tous cest comptes ont le même mot de passe:
+Tous ces comptes ont le même mot de passe:
 
 testpass1
 
 
 ## Remarque
 
-Votre ordinateur doit être connecté à internet, car LitReview importe des ressources extérieures (bulma via cdn).
+Votre ordinateur doit être connecté à internet, car LitReview importe des ressources extérieures (bulma et material design via cdn).
+
+## Utilisation de l'application
+
+La page d'accueil vous propose soit de créer un nouveau compte, soit de vous connecter avec un compte existant.
+Une fois connecté, vous êtes redirigé vers votre flux. Une barre de navigation vous permet de choisir entre différentes fonctionnalités:
+
+### Flux
+
+Ici vous verrez s'afficher tous les posts qui vous concernent (les votre et ceux des utilisateurs que vous suivez).
+Une pagination vous permet d'accéder aux posts plus anciens.
+La page de flux vous propose aussi deux options:
+- demander une critique
+- créer une critique
+Ces deux options vous redirigeront vers des formulaires adaptés.
+Dans votre flux, les demandes de critiques qui n'ont pas encore reçu de réponse apparaissent avec un bouton "créer une critique", utilisez ce bouton pour répondre à la demande avec le formulaire qui vous sera proposé.
+
+
+### Posts
+
+Ici vont s'afficher vos propre posts, vous pouvez soit les modifier (un formulaire vous sera alors proposé), soit les supprimer.
+
+
+### Abonnements
+
+Cette fonctionnalité vous propose de suivre des utilisateurs, ou au contraire de vous désabonner.
+Pour suivre un utilisateur, il suffit de taper son nom dans le champ, puis cliquer sur "envoyer".
+
+Pour se désabonner, cliquez sur le bouton "se désabonner" correspondant, une confirmation vous sera demandée.
+
+
+### LITReview
+Cliquer sur "LitReview" vous raménera à la page d'accueil.
+
+### Se deconnecter
+Déconnecte l'utilisateur.
