@@ -10,7 +10,8 @@ Téléchargez et décompressez ce depot github, ou clonez-le.
 ### 2 - Environement virtuel
 Placez-vous dans le répertoire racine du projet (au même niveau que le fichier 'manage.py')
 Installez votre environement virtuel:
-en console:
+(développé avec la version 3.9 de python, il se peut qu'une verison plus ancienne pose problème pour les dépendences)
+Tapez en console:
 
 ```sh
 python3 -m venv env
@@ -53,3 +54,8 @@ et un compte administrateur:
 Tous cest comptes ont le même mot de passe:
 
 testpass1
+
+
+## Remarque
+
+Votre ordinateur doit être connecté à internet, car LitReview importe des ressources extérieures (bulma via cdn).
