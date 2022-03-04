@@ -1,6 +1,6 @@
 # LITReview
 
-Lit review est une application web permettant de demander des critiques de livres, ainsi que de
+Lit review est une application web permettant de demander des critiques de livres, ainsi que de 
 repondre à ces demandes en écrivant des critiques.
 
 ## Installation et lancement
@@ -72,8 +72,8 @@ Ici vous verrez s'afficher tous les posts qui vous concernent (les votre et ceux
 Une pagination vous permet d'accéder aux posts plus anciens.
 La page de flux vous propose aussi deux options:
 - demander une critique
-- créer une critique
-Ces deux options vous redirigeront vers des formulaires adaptés.
+- créer une critique  
+Ces deux options vous redirigeront vers des formulaires adaptés.  
 Dans votre flux, les demandes de critiques qui n'ont pas encore reçu de réponse apparaissent avec un bouton "créer une critique", utilisez ce bouton pour répondre à la demande avec le formulaire qui vous sera proposé.
 
 
