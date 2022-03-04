@@ -3,6 +3,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
 
+"""The forms here are customized to match with the bulma css framework
+"""
+
+
 class SignUpForm(UserCreationForm):
     password1 = forms.CharField(
         max_length=150, required=True,

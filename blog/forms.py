@@ -5,6 +5,10 @@ from .models import (
 )
 
 
+"""The forms here are customized to match with the bulma css framework
+"""
+
+
 class TicketNoImageCreateForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(attrs={"class": "input"}),

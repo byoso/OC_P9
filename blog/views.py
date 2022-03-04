@@ -23,6 +23,8 @@ from project_LITReview import const
 
 
 def home(request):
+    """This view is displayed by default,
+    even if a user is not connected"""
     return render(request, 'blog/home.html')
 
 
@@ -75,7 +77,7 @@ def ticket_create(request):
 
 @login_required
 def review_create(request, ticket_id):
-    """Create a review from an existing ticket"""
+    """Creates a review from an existing ticket"""
     ticket = get_object_or_404(Ticket, id=ticket_id)
     if ticket.reviewed:
         raise Http404()
@@ -100,7 +102,8 @@ def review_create(request, ticket_id):
 
 @login_required
 def review_publish(request):
-    """Create a spontaneous review without ticket"""
+    """Creates a spontaneous review without ticket, the ticket is
+    genereted beside the review in a row"""
     if request.method == "POST":
         ticket_form = TicketCreateForm(request.POST, request.FILES)
         review_form = ReviewCreateForm(request.POST)
@@ -128,6 +131,7 @@ def review_publish(request):
 
 @login_required
 def subscriptions(request):
+    """this views allows to follow / unfollow other users"""
     followings = UserFollows.objects.filter(user=request.user)
     followers = UserFollows.objects.filter(followed_user=request.user)
     if request.method == "POST":
@@ -167,6 +171,8 @@ def subscriptions(request):
 
 @login_required
 def unfollow(request, id):
+    """This code is called to unfollow a user when the button
+    "unsuscribe" is clicked"""
     unfollow = get_object_or_404(get_user_model(), id=id)
     if request.method == "POST":
         unfollowing = get_object_or_404(
@@ -188,6 +194,7 @@ def unfollow(request, id):
 
 @login_required
 def posts(request, page=1):
+    "displays the own posts of a user"
     reviews = request.user.get_reviews()
     tickets = request.user.get_tickets()
     posts_created = sorted(
