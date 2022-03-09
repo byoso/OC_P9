@@ -37,6 +37,13 @@ pip install -r requirements.txt
 ./manage.py runserver
 ```
 
+Quand vous voudrez fermer le serveur, vous ferez un ctrl+C dans le terminal,  
+puis, pour quitter l'environement virtuel:
+
+```sh
+deactivate
+```
+
 ### 5 - Accédez à l'application
 Dans votre navigateur, allez à l'adresse suivante:
 
